@@ -1,4 +1,4 @@
-# Domain analyzer
+# Domain analyzer 🧬💻
 
 Python package to analyze homologous proteins. 
 
