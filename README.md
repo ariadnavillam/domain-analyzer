@@ -93,6 +93,8 @@ Note: [query] is the name of the query sequence so for each of them all the prev
 All the figures are created with the matplotlib library.
 
 - <u>Phylogenetic trees</u>. For each query introduced a tree is generated. The tree is automatically saved in `Results/Figures/`. The figure will not automatically pop-up, to visualize the tree open the png image.
+
 - <u>Blastp plot</u>. Plot of the blastp results, representing coverage and identity. Results for homologous proteins (same query) share the same color and the e-value is represented by the size of the dot. The matches are more significant if the dots are on the top right of the graph (more coverage and identity) and the size of the dot is small (lower e-value). 
+
 - <u>Domain analysis</u>. For each set of homologous proteins a bar graphic is created with the 5 most common domains found for that set. Each bar represents a domain and it shows how many proteins have that same domain. 
 
