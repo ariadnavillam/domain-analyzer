@@ -34,6 +34,7 @@ def help_ext():
     print("\t-id \n\t   identity cutoff. Minimun percentage of identical characters in the")
     print("\t   two sequences.")
     print("\t*When not provided the default values are: cov = 50, id = 25\n")
+    print("File prosite.dat must be in the same path as main.py.")
     print("See ReadMe.md for further information.\n")
     sys.exit()
 
@@ -82,6 +83,11 @@ def arguments():
 if sys.argv[1] in ('-h', '--help'):
     help_ext()
 
+if os.path.isfile("prosite.dat") == False:
+    print("Error. File prosite.dat not found.")
+    help_msg()
+    sys.exit()
+
 cov, iden = arguments() #default values or the ones set by the user
 
 query_file = sys.argv[1]
@@ -113,16 +119,16 @@ for file_p in os.listdir(subject_folder): #check if files in the folder are genb
     check_file(subject_folder + file_p, "genbank")
     locus_dict=bs.convert_seq(subject_folder + file_p, subject_fasta, locus_org)
 
-print("---------------OUTPUT--------------")
-print("The arguments introduced are correct. \n")
-print("Files generated: \nMultifasta file: Data/" + subject_fasta)
+print("\n-----DOMAIN ANALYZER-----")
+print("The arguments are correct. \n")
+print("Files generated: \n\tMultifasta file: Data/" + subject_fasta)
 
 dbname = bs.create_db(subject_fasta) #create database and return name
 
 shutil.copy(query_file, "Data/"+ query_file)
 shutil.move(subject_fasta, "Data/" + subject_fasta)
 
-print("Database: Data/DBs/" + dbname + ".\n")
+print("\tDatabase: Data/DBs/" + dbname + ".\n")
 
 blast_output, range_cov, range_iden, hits = bs.blast_alignment("Data/" + query_file, "Data/DBs/" + dbname, query_file[:-3] + "_result.out", cov, iden)
 
@@ -149,7 +155,7 @@ print("···MSA RESULTS···")
 print("Query sequences introduced: " + str(len(query_sequences)) )
 pro_domains = list() #list containing lists of prosite domains found for each query
 for key in query_sequences:
-    print(key)
+    print("\t" + key)
     m_f = mc.muscle_fasta(key, query_sequences, blast_output, cov, iden, locus_dict)
     align_file, tree = mc.MSA(m_f)
 
@@ -169,16 +175,11 @@ query_names = [key for key in query_sequences]
 #graficos
 os.makedirs("Results/Figures/", exist_ok=True)
 print("\n···FIGURES···")
-print("*Close the windows with graphics in order to end the script.*")
+print("*Close the windows with graphics to end the script.*")
 print("All the images are automatically saved.")
 tr_im  = gf.graph_tree(query_names)
 bl_im  = gf.graph_blastp(blast_output, query_names)
 dom_im = gf.graph_domains(pro_domains, query_names)
 print("\nPhylogenetic trees: " + tr_im)
 print("Figure showing blastp results: " + bl_im)
-print("Figure showing most common domains per query sequence : " + dom_im)
-
-
-
-
-
+print("Figure showing most common domains : " + dom_im)
