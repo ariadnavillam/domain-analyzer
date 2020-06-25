@@ -27,7 +27,8 @@ The following programs must be installed in your computer.
 - Muscle.
 - Blast. 
 
-File `prosite.dat` must be in the same path as the python scripts. Download link: [prosite.dat](ftp://ftp.expasy.org/databases/prosite/prosite.dat)
+File `prosite.dat` must be in the same path as the python scripts. Download link: ftp://ftp.expasy.org/databases/prosite/prosite.dat 
+Source: [Expasy](https://prosite.expasy.org/prosuser.html)
 
 Python libraries used: os, system, shutil, subprocess, re, matplotlib, numpy.
 
